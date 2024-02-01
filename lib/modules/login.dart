@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:iteda_flutter_course/components/component.dart';
-import 'package:iteda_flutter_course/modules/home_page_screen.dart';
+import 'package:iteda_flutter_course/layout/home_page_screen.dart';
+import 'package:iteda_flutter_course/shared/components/component.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -111,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void _login() {
     String email = emailController.text;
     String password = passwordController.text;
-    if (password.length>3) {
+    if (password.length>3&&!email.isEmpty) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
