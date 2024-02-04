@@ -1,6 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:iteda_flutter_course/layout/home_page_screen.dart';
 import 'package:iteda_flutter_course/shared/components/component.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../shared/components/app_button.dart';
+import '../shared/components/app_settings.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -11,6 +15,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   var formKey = GlobalKey<FormState>();
+
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   bool isPasswordShow = true;
@@ -30,8 +35,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     height: 40,
                   ),
-                  Image.asset(
-                    "assets/flutterImg.png",
+                  Image.network(
+                    "https://w7.pngwing.com/pngs/537/866/png-transparent-flutter-hd-logo.png",
                     width: 300,
                     height: 150,
                   ),
@@ -61,11 +66,39 @@ class _LoginScreenState extends State<LoginScreen> {
                         isPasswordShow = !isPasswordShow;
                       });
                     },
-
                   ),
-                  ///////////////////
-
                   SizedBox(height: 16.0),
+                  AppButton(
+                    label: "Log in",
+                    color: Colors.blue[300]!,
+                    onTap: () async {
+                      if (formKey.currentState!.validate()) {
+                        if (kDebugMode) {
+                          print("Logged in");
+                        }
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //       builder: (context) => WelcomePage(
+                        //             phoneNumber: phoneNumberController.text,
+                        //           )),
+                        // );
+                        final SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        await prefs.setString(
+                            AppSettings.emailSharedPrefsKey,
+                            emailController.text);
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HomePage()),
+                        );
+                        // phoneNumberController.clear();
+                        passwordController.clear();
+                      }
+                    },
+                  ),
+                  /*
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
@@ -79,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       style:
                           TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                     ),
-                  ),
+                  ),*/
                   const SizedBox(
                     height: 16,
                   ),
@@ -90,14 +123,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     height: 16,
                   ),
-                  TextButton(
-                    style: TextButton.styleFrom(
-                        foregroundColor: Colors.black54,
-                        backgroundColor: Colors.grey[300],
-                        fixedSize: Size(MediaQuery.of(context).size.width / 1.2,
-                            MediaQuery.of(context).size.height / 13)),
-                    onPressed: () {},
-                    child: const Text('No Account? Sign Up'),
+                  AppButton(
+                    label: "No account, sign up",
+                    color: Colors.grey,
+                    onTap: () {
+                      if (kDebugMode) {
+                        print("Sign up");
+                      }
+                    },
                   ),
                 ],
               ),
@@ -107,21 +140,4 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
-  void _login() {
-    String email = emailController.text;
-    String password = passwordController.text;
-    if (password.length>3&&!email.isEmpty) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => HomePage(),
-        ),
-      );
-    }else if(formKey.currentState!.validate()) {
-      print(emailController.text);
-      print(passwordController.text);
-    }
-  }
-
 }

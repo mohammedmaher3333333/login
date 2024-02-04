@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iteda_flutter_course/modules/login.dart';
+import 'package:iteda_flutter_course/modules/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      home: const LoginScreen(),
+      home: const SplashScreen(),
     );
   }
 }
