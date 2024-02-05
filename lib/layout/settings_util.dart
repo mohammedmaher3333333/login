@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../modules/login.dart';
+import '../modules/login_screen.dart';
 import '../shared/components/app_settings.dart';
 
 class SettingsUtil {

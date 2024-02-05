@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:iteda_flutter_course/models/products_model.dart';
-import 'package:iteda_flutter_course/network_settings.dart';
+
+import '../models/products_model.dart';
+import '../network_settings.dart';
+
 
 class ProductsService {
   static final dio = Dio();
@@ -13,3 +15,4 @@ class ProductsService {
     return productsModel.products ?? [];
   }
 }
+

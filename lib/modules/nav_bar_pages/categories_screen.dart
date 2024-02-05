@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../service/categories_service.dart';
+import '../../shared/components/item_card_widget.dart';
+
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({Key? key}) : super(key: key);
 
@@ -8,22 +11,34 @@ class CategoriesScreen extends StatefulWidget {
 }
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
+  bool isLoading = true;
+  List<dynamic> productList = [];
+
+  Future<void> getData() async {
+    productList = await CategoriesService.getProductsData();
+    isLoading = false;
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 4,
-      ),
-      itemCount: 10,
+    return isLoading
+        ? const Center(
+      child: CircularProgressIndicator(),
+    )
+        : ListView.builder(
+      itemCount: productList.length,
       itemBuilder: (BuildContext context, int index) {
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            color: Colors.blue,
-            child: Icon(
-              Icons.abc,
-            ),
-          ),
+        return ItemCard(
+          productName: productList[index].title ?? "--",
+          price: "${productList[index].price}",
+          thumbnail: productList[index].thumbnail ?? "",
         );
       },
     );

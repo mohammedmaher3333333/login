@@ -43,14 +43,16 @@ class _MainScreenState extends State<MainScreen> {
                       MaterialPageRoute(
                           builder: (context) => ProductDetailsScreen(
                                 product: productList[index],
-                              )),
+                              ),
+                      ),
                     );
                   },
                   child: ItemCard(
                     productName: productList[index].title ?? "--",
                     price: "${productList[index].price}",
                     thumbnail: productList[index].thumbnail ?? "",
-                  ));
+                  ),
+              );
             },
           );
   }

@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:iteda_flutter_course/models/products_model.dart';
+
+import '../models/products_model.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   final Product product;
